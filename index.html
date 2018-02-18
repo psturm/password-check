@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>password entropy check</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+<!--    <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="vendor/simple-line-icons/css/simple-line-icons.css">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">-->
+
+    <!-- Custom styles for this template -->
+    <link href="css/new-age.min.css" rel="stylesheet">
+
+    <link href="css/custom.css" rel="stylesheet">
+
+  </head>
+
+  <body id="page-top">
+
+  <a href="https://github.com/psturm/password-check" class="github-ribbon"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/a6677b08c955af8400f44c6298f40e7d19cc5b2d/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png"></a>
+
+
+  <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+      <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="#page-top">Password Check</a>
+        <div class="navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#pwCheck">Check</a>
+            </li>
+              <li class="nav-item">
+                  <a class="nav-link js-scroll-trigger" href="#tips">Tips</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link js-scroll-trigger" href="#faq">FAQ</a>
+              </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <header class="masthead">
+      <div class="container h-100">
+        <div class="row h-100">
+          <div class="col-lg-7 my-auto">
+            <div class="header-content mx-auto">
+              <h1 class="mb-5">Is your password safe enough?</h1>
+              <a href="#pwCheck" class="btn btn-outline btn-xl js-scroll-trigger">Check your password now!</a>
+            </div>
+          </div>
+          <div class="col-lg-5 my-auto">
+            <div class="device-container">
+              <div class="device-mockup iphone6_plus portrait white">
+                <div class="device">
+                  <div class="screen">
+                    <!-- Demo image for screen mockup, you can put an image here, some HTML, an animation, video, or anything else! -->
+                    <img src="img/password-dial.png" class="img-fluid" alt="">
+                  </div>
+                  <div class="button">
+                    <!-- You can hook the "home button" to some JavaScript events or just remove it -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="bg-primary text-center">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8 mx-auto">
+            <h2 class="section-heading">Password entropy</h2>
+
+              <blockquote class="blockquote">
+                  <p class="mb-0">
+                      Entropy is another way of describing the <em>number of guesses needed</em> to find the correct password.<br> <br>
+                      The entropy in bits is basically the base-2 logarithm of that number <br>
+                      (e.g. 23 bit: 2^23 = 8,388,608 guesses). <br><br>
+                      In average, an attacker only has to guess half that number to find the password.
+                  </p>
+                  <p style="margin-top: 40px;">
+                      <em>More information on <a href="https://en.wikipedia.org/wiki/Password_strength#Entropy_as_a_measure_of_password_strength">Wikipedia</a></em>
+                  </p>
+              </blockquote>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pw-check" id="pwCheck">
+      <div class="container">
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <h2 class="section-heading">Password check</h2>
+
+                <form class="pw-form">
+                    <label for="pwInput">Your password:</label><br>
+                    <input type="password" id="pwInput" value="" placeholder="password" class="">
+                    <span data-toggle="#pwInput" class="toggle-password" title="toggle text/password field"></span>
+                </form>
+
+                <div class="pw-output">
+                    <div id="outputArea">
+                        <div>
+                            Entropy
+                            <img src="img/info.svg" width="20px" height="20px"
+                                 title="The calculated entropy is for real random passwords. Human generated ones are likely to have less entropy."
+                                 alt="The calculated entropy is for real random passwords. Human generated ones are likely to have less entropy."/>:
+                            <span id="outputEntropy">-</span>
+                            <span class="badge" id="outputEntropyQualityLabel" style="margin-left: 15px;"></span>
+                        </div>
+
+                        <div>
+                            Number of guesses: <span id="outputGuesses">-</span>
+                        </div>
+                        <br>
+                        <div>
+                            Length: <span id="outputLength">-</span>
+                        </div>
+                        <div>
+                            Set of Symbols: <span id="outputSymbolCount">-</span> <em>(<span id="outputSymbolLabel">-</span>)</em>
+                        </div>
+                    </div>
+
+                </div>
+
+                <p>
+
+                </p>
+
+                <p class="minimal-hint" style="margin-top: 50px;">
+                    <a href="index-minimal.html" alt="minimal version">Minimal version</a> (also for download and offline usage)
+                </p>
+            </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-primary text-center" id="info">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 mx-auto">
+                    <p>
+                        This project works <strong>fully in your browser</strong> and <strong>won't send any information to anyone.</strong>
+                    </p>
+                    <p>
+                        You can also download the <a href="index-minimal.html" alt="minimal version">minimal version</a>, unplug your computer from the internet and execute this script offline to be sure.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!--    <section class="cta">
+      <div class="cta-content">
+        <div class="container">
+          <h2>Stop waiting.<br>Start checking.</h2>
+          <a href="#pwCheck" class="btn btn-outline btn-xl js-scroll-trigger">Let's Get Started!</a>
+        </div>
+      </div>
+      <div class="overlay"></div>
+    </section>-->
+
+    <section class="" id="tips">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 mx-auto">
+                    <h2 class="section-heading">Tips</h2>
+                    <p>
+                        Password selection is always depending on your "threat&nbsp;model", but here are some general guidelines and tips:
+                    </p>
+
+                    <ul>
+                        <li>use long passwords, minimum 12 characters (more&nbsp;characters&nbsp;=&nbsp;better)</li>
+                        <li>use symbols of all kinds (lowercase, uppercase, digits, special&nbsp;characters)</li>
+                        <li>don't use names or words from dictionaries</li>
+                        <li>don't reuse a password on multiple sites</li>
+                    </ul>
+
+                    <p>
+                        Ideally, use a password manager software, e.g. <a href="https://keepass.info/" alt="Keepass">Keepass</a> and generate a random password for each site.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+  <hr>
+
+  <section class="" id="faq">
+      <div class="container">
+          <div class="row">
+              <div class="col-md-8 mx-auto">
+                  <h2 class="section-heading">F.A.Q.</h2>
+
+                  <div>
+                      <strong>How much entropy is "safe"?</strong><br>
+                      This depends on a lot of factors and can't be easily answered. Modern hardware or even hardware clusters can brute force passwords pretty quickly nowadays. How fast is only matter of effort (money).
+                  </div>
+
+
+
+              </div>
+          </div>
+      </div>
+  </section>
+
+    <section class="contact bg-primary" id="contact">
+      <div class="container">
+          <a href="https://github.com/psturm/password-check">
+              <img src="./img/mark-github.svg" title="Show code on GitHub" width="48" height="48">
+          </a>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+          <p>MIT License (MIT) - 2018</p>
+
+          <p>
+              <a href="index-minimal.html" title="minimal version">Minimal version</a> for download and offline usage. Source code on <a href="https://github.com/psturm/password-check" alt="source code on GitHub">GitHub</a>.
+          </p>
+
+
+          <p>
+              This is a private hobby project. We don't take responsibility for lost passwords, incorrect information or whatsoever. <br>
+              Always be careful, what you type on random pages on the internet!
+          </p>
+      </div>
+    </footer>
+
+    <script src="js/pw-check.js"></script>
+    <script src="js/fancy.js"></script>
+
+  </body>
+
+</html>

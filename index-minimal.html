@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>password entropy check</title>
+
+    <script>
+        var pwInput, outputArea;
+
+        function PasswordCheck (passwordValue) {
+            var password, length, symbolCount, entropy;
+
+            password = String(passwordValue);
+            calculate(this);
+
+
+            // get length of the password
+            this.getLength = function() {
+                return length;
+            };
+
+            // get count of symbols, that are (potentially) used in password
+            this.getSymbolCount = function() {
+                return symbolCount;
+            };
+
+            // get entropy in bits
+            this.getEntropyBits = function(decimals) {
+                if (decimals) {
+                    return entropy.toFixed(decimals);
+                }
+
+                return entropy;
+            };
+
+
+            function calculate(self) {
+                // based on https://en.wikipedia.org/wiki/Password_strength
+
+                length = password.length;
+                symbolCount = getSymbolCount(password);
+
+                entropy = length * (Math.log(symbolCount) / Math.log(2));
+            }
+
+            function getSymbolCount(pw) {
+                var match;
+
+                // check: only digits
+                match = pw.match(/^[0-9]*$/);
+                if (match != null) {
+                    return 10;
+                }
+
+                // check: only hex
+                match = pw.match(/^[0-9A-F]*$/);
+                if (match != null) {
+                    return 16;
+                }
+
+                // check: only a..z
+                match = pw.match(/^[a-z]*$/);
+                if (match != null) {
+                    return 26;
+                }
+
+                // check: only A..Z
+                match = pw.match(/^[A-Z]*$/);
+                if (match != null) {
+                    return 26;
+                }
+
+                // check: only a..z, 0-9
+                match = pw.match(/^[a-z0-9]*$/);
+                if (match != null) {
+                    return 36;
+                }
+
+                // check: only A..Z, 0-9
+                match = pw.match(/^[A-Z0-9]*$/);
+                if (match != null) {
+                    return 36;
+                }
+
+                // check: only a..z, A..Z
+                match = pw.match(/^[a-zA-Z]*$/);
+                if (match != null) {
+                    return 52;
+                }
+
+                // check: only a..z, A..Z, 0-9
+                match = pw.match(/^[a-zA-Z0-9]*$/);
+                if (match != null) {
+                    return 62;
+                }
+
+                // check: has whitespace?
+                match = pw.match(/[\ ]/);
+                if (match != null) {
+                    return 94;
+                }
+
+                return 95;
+            }
+        }
+
+
+
+        function updatePasswordCheck(e) {
+            e.preventDefault();
+
+            var password = pwInput.value;
+            var pwCheck = new PasswordCheck(password);
+
+            outputArea.innerHTML = 'Entropy: ' + pwCheck.getEntropyBits(1) + ' bits' + '\n\n'
+                + 'Length: ' + pwCheck.getLength() + '\n'
+                + 'Symbol count: ' + pwCheck.getSymbolCount();
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            pwInput = document.querySelector("#pwInput");
+            outputArea = document.querySelector("#outputArea");
+
+            pwInput.addEventListener('keyup', updatePasswordCheck, false);
+        });
+
+    </script>
+</head>
+
+<body id="page-top">
+
+    <div>
+        <em>This is the minimal version. For a nicer UI, go to <a href="index.html">index.html</a></em>
+    </div>
+    <hr>
+
+    <div>
+        <strong>For security reasons, you can simply download (right click "save as") this file and run this offline.</strong>
+    </div>
+    <hr>
+    <br>
+    <br>
+
+    <form class="pw-form">
+        <label for="pwInput">Password to check:</label><br>
+        <input type="password" id="pwInput" value="" placeholder="password" autofocus="autofocus">
+    </form>
+
+    <pre id="outputArea"></pre>
+
+
+    <br>
+    <br>
+    <br>
+    <hr>
+    <div>
+        <em>part of <a href="https://github.com/psturm/password-check">https://github.com/psturm/password-check</a></em>
+    </div>
+
+
+</body>
+
+</html>
